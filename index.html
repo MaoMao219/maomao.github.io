@@ -2,88 +2,19 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Pikachu Game</title>
-    <style>
-        body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; background: #f0f0f0; }
-        h1 { color: #333; }
-        #game-board { 
-            display: grid; 
-            grid-template-columns: repeat(4, 80px); 
-            gap: 10px; 
-            margin-top: 20px;
-        }
-        .card {
-            width: 80px; height: 80px;
-            background: #ffcc00;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 30px; cursor: pointer; border-radius: 8px;
-            user-select: none; transition: transform 0.2s;
-        }
-        .card.flipped { background: #fff; transform: rotateY(180deg); }
-        .card.matched { background: #8bc34a; visibility: hidden; }
-    </style>
-</head>
+    <title>Pikachu Game</title>
+    <link rel="stylesheet" href="style.css"> </head>
 <body>
-
     <h1>Mini Pikachu</h1>
-    <p>Tìm cặp giống nhau để ghi điểm!</p>
+    
     <div id="game-board"></div>
 
-    <script>
-        const icons = ['⚡', '🐱', '🔥', '💧', '🍃', '❄️', '🐘', '🐭'];
-        let cards = [...icons, ...icons]; // Tạo cặp
-        let flippedCards = [];
-        let matchedCount = 0;
+    <div id="web-terminal">
+        <div class="terminal-header">SYSTEM LOG</div>
+        <div id="terminal-content">
+            <p>> Đang tải hệ thống...</p>
+        </div>
+    </div>
 
-        // Trộn bài (Shuffle)
-        cards.sort(() => Math.random() - 0.5);
-
-        const board = document.getElementById('game-board');
-
-        // Tạo các thẻ bài
-        cards.forEach((icon, index) => {
-            const card = document.createElement('div');
-            card.classList.add('card');
-            card.dataset.icon = icon;
-            card.dataset.index = index;
-            card.innerText = '?';
-            card.addEventListener('click', flipCard);
-            board.appendChild(card);
-        });
-
-        function flipCard() {
-            if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
-                this.classList.add('flipped');
-                this.innerText = this.dataset.icon;
-                flippedCards.push(this);
-
-                if (flippedCards.length === 2) {
-                    checkMatch();
-                }
-            }
-        }
-
-        function checkMatch() {
-            const [card1, card2] = flippedCards;
-            if (card1.dataset.icon === card2.dataset.icon) {
-                setTimeout(() => {
-                    card1.classList.add('matched');
-                    card2.classList.add('matched');
-                    flippedCards = [];
-                    matchedCount += 2;
-                    if (matchedCount === cards.length) alert("Chúc mừng! Bạn đã thắng!");
-                }, 500);
-            } else {
-                setTimeout(() => {
-                    card1.classList.remove('flipped');
-                    card2.classList.remove('flipped');
-                    card1.innerText = '?';
-                    card2.innerText = '?';
-                    flippedCards = [];
-                }, 800);
-            }
-        }
-    </script>
-</body>
+    <script src="script.js"></script> </body>
 </html>
